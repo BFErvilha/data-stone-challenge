@@ -6,9 +6,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     products: [
-      { name: 'Produto 1', id: 1, status: 'ativo' },
-      { name: 'Produto 2', id: 2, status: 'inativo' },
-      { name: 'Produto 3', id: 3, status: 'ativo' },
+      { name: 'Produto 1', id: 1, status: true },
+      { name: 'Produto 2', id: 2, status: false },
+      { name: 'Produto 3', id: 3, status: true },
     ],
   },
   getters: {

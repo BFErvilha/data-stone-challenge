@@ -10,13 +10,20 @@
         >
       </b-col>
       <b-col cols="12" class="mt-4">
-        <b-table striped hover :fields="fields" :items="products">
+        <b-table striped hover :fields="fields" :items="products" :small="true">
           <template #empty>
             <h4>No momento não temos Produtos Cadastrados</h4>
           </template>
-          <template #cell(actions)="">
+          <template #cell(status)="data">
+            <div class="badge" :class="statusToClass(data.item.status)">
+              {{ data.item.status | statusName }}
+            </div>
+          </template>
+          <template #cell(actions)="data">
             <div class="btn-actions d-flex justify-content-end">
-              <b-button variant="success">Editar</b-button>
+              <b-button :to="`/products/${data.item.id}`" variant="success"
+                >Editar</b-button
+              >
               <b-button variant="secondary">Desativar</b-button>
             </div>
           </template>
@@ -34,13 +41,29 @@ export default {
       fields: [
         { key: 'name', label: 'Produto' },
         { key: 'status', label: 'Status' },
-        { key: 'actions', label: 'Ações' },
+        {
+          key: 'actions',
+          label: 'Ações',
+          thStyle: { width: '250px !important' },
+        },
       ],
     };
   },
   computed: {
     products() {
       return this.$store.getters.allProducts;
+    },
+  },
+  methods: {
+    statusToClass(status) {
+      if (status) return 'badgeActive';
+      return 'badgeInactive';
+    },
+  },
+  filters: {
+    statusName(status) {
+      if (status) return 'Ativo';
+      return 'Inativo';
     },
   },
 };
@@ -51,5 +74,12 @@ export default {
   button {
     margin-left: 15px;
   }
+}
+.badgeActive {
+  background-color: #53a653;
+}
+
+.badgeInactive {
+  background-color: #f32013;
 }
 </style>

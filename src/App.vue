@@ -1,10 +1,13 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <b-navbar type="dark" variant="dark" class="justify-content-end">
+      <b-navbar-nav>
+        <b-nav-item to="/">Home</b-nav-item>
+        <b-nav-item to="/products">Produtos</b-nav-item>
+        <b-nav-item to="/customers">Clientes</b-nav-item>
+      </b-navbar-nav>
+    </b-navbar>
+    <router-view />
   </div>
 </template>
 

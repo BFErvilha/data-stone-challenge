@@ -10,7 +10,10 @@
         >
       </b-col>
       <b-col cols="12" class="mt-4">
-        <b-table striped hover :fields="fields" :items="items">
+        <b-table striped hover :fields="fields" :items="products">
+          <template #empty>
+            <h4>No momento não temos Produtos Cadastrados</h4>
+          </template>
           <template #cell(actions)="">
             <div class="btn-actions d-flex justify-content-end">
               <b-button variant="success">Editar</b-button>
@@ -33,13 +36,12 @@ export default {
         { key: 'status', label: 'Status' },
         { key: 'actions', label: 'Ações' },
       ],
-      items: [
-        { age: 40, name: 'Dickerson', status: 'Macdonald' },
-        { age: 21, name: 'Larsen', status: 'Shaw' },
-        { age: 89, name: 'Geneva', status: 'Wilson' },
-        { age: 38, name: 'Jami', status: 'Carney' },
-      ],
     };
+  },
+  computed: {
+    products() {
+      return this.$store.getters.allProducts;
+    },
   },
 };
 </script>

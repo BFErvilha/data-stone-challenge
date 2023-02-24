@@ -2,11 +2,11 @@
   <b-container>
     <b-row>
       <b-col cols="6" class="mt-2 d-flex justify-content-start">
-        Produtos
+        Clientes
       </b-col>
       <b-col cols="6" class="mt-2 d-flex justify-content-end">
         <b-button to="/products/create" variant="success"
-          >Novo Produto</b-button
+          >Novo Cliente</b-button
         >
       </b-col>
       <b-col cols="12" class="mt-4">
@@ -15,11 +15,11 @@
           stacked="sm"
           hover
           :fields="fields"
-          :items="products"
+          :items="customers"
           :small="true"
         >
           <template #empty>
-            <h4>No momento não temos Produtos Cadastrados</h4>
+            <h4>No momento não temos clientes cadastrados ainda</h4>
           </template>
           <template #cell(status)="data">
             <div class="badge" :class="statusToClass(data.item.status)">
@@ -39,14 +39,19 @@
     </b-row>
   </b-container>
 </template>
+
 <script>
 export default {
   // eslint-disable-next-line
-  name: 'Products',
+  name: 'Customers',
   data() {
     return {
       fields: [
         { key: 'name', label: 'Produto' },
+        { key: 'document', label: 'Documento' },
+        { key: 'phone', label: 'Telefone' },
+        { key: 'email', label: 'E-mail' },
+        { key: 'products', label: 'Produtos' },
         { key: 'status', label: 'Status' },
         {
           key: 'actions',
@@ -57,8 +62,8 @@ export default {
     };
   },
   computed: {
-    products() {
-      return this.$store.getters.allProducts;
+    customers() {
+      return this.$store.getters.allCustomers;
     },
   },
   methods: {

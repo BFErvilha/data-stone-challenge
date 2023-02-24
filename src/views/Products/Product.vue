@@ -22,7 +22,7 @@
             </b-form-checkbox>
           </b-form-group>
 
-          <b-button v-if="!productId" @click="saveProduct()" variant="primary"
+          <b-button v-if="!hasRegister" @click="saveProduct()" variant="primary"
             >Registrar</b-button
           >
           <b-button v-else @click="updateProduct()" variant="primary"
@@ -39,7 +39,7 @@ export default {
   name: 'Product',
   data() {
     return {
-      productId: null,
+      hasRegister: false,
       product: {
         name: null,
         status: false,
@@ -52,24 +52,17 @@ export default {
       this.$router.push({ name: 'productsList' });
     },
     updateProduct() {
-      this.product.id = this.productId;
       this.$store.dispatch('updateExistingProduct', this.product);
       this.$router.push({ name: 'productsList' });
     },
     getStoreProduct(productId) {
-      const allProducts = this.$store.getters.allProducts;
-      allProducts.map((item) => {
-        if (item.id === productId) {
-          this.product.name = item.name;
-          this.product.status = item.status;
-        }
-      });
+      this.hasRegister = true;
+      this.product = this.$store.getters.productById(productId);
     },
   },
   created() {
     if (this.$route.params.productId) {
-      this.productId = parseInt(this.$route.params.productId);
-      this.getStoreProduct(this.productId);
+      this.getStoreProduct(parseInt(this.$route.params.productId));
     }
   },
 };

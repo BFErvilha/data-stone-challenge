@@ -13,6 +13,8 @@ Divisão do projeto:
 - Cadastro / Atualização de Cliente: Página utilizada tanto para cadastro quanto para atualização do cliente, que são salvas na store do projeto.
 - Adicionar Produto: Pagina que lista produtos já vinculados do cliente e produtos disponibilizados para o vinculo.
 
+[Demo](https://data-stone-challenge-git-main-bfervilha.vercel.app/)
+
 ### Esse projeto contém:
 
 - Vue.JS 2

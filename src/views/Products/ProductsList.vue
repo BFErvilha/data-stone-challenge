@@ -32,6 +32,7 @@
                 size="sm"
                 @click="toEditProduct(data.item.id)"
                 variant="success"
+                v-b-tooltip.hover.bottom="'Editar Produto'"
               >
                 <b-icon icon="pencil-square" />
               </b-button>
@@ -39,6 +40,9 @@
                 size="sm"
                 @click="statusChange(data.item.id)"
                 :variant="data.item.status ? 'warning' : 'secondary'"
+                v-b-tooltip.hover.bottom="
+                  !data.item.status ? 'Ativar' : 'Desativar'
+                "
               >
                 <b-icon v-if="!data.item.status" icon="plug" />
 

@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row>
-      <b-col class="mt-4" cols="12"> Product To Costumer </b-col>
+      <b-col class="mt-4" cols="12"> Vincular Produto em Cliente </b-col>
       <b-col class="mt-4" cols="12"> {{ customer.name }} </b-col>
       <b-col class="mt-4" cols="6">
         <div style="width: 100%">
@@ -13,6 +13,7 @@
                   @click="removeProduct(cp.id)"
                   variant="danger"
                   size="sm"
+                  v-b-tooltip.hover.bottom="'Remover Produto'"
                 >
                   <b-icon icon="trash-fill" />
                 </b-button>
@@ -23,18 +24,14 @@
       </b-col>
       <b-col class="mt-4" cols="6">
         <div style="width: 100%">
-          <b-form-group
-            label="Using sub-components:"
-            v-slot="{ ariaDescribedby }"
-          >
+          <b-form-group label="Produtos disponiveis:">
             <b-form-checkbox-group
               id="checkbox-group-2"
               v-model="customersProduct.products"
-              :aria-describedby="ariaDescribedby"
               name="flavour-2"
             >
               <b-form-checkbox
-                v-for="product in products"
+                v-for="product in productsToShow"
                 :key="product.id"
                 :value="product"
                 >{{ product.name }}</b-form-checkbox
@@ -78,6 +75,17 @@ export default {
     products() {
       return this.$store.getters.allProducts;
     },
+    productsToShow() {
+      let productList = [...this.products, ...this.costumerProducts].filter(
+        (prod) =>
+          !(
+            this.products.some((prod1) => prod1.id === prod.id) &&
+            this.costumerProducts.some((prod2) => prod2.id === prod.id)
+          ),
+      );
+      productList = productList.filter((prod) => prod.status !== false);
+      return productList;
+    },
   },
   methods: {
     linkProducts() {
@@ -90,6 +98,9 @@ export default {
         productId: productId,
       };
       this.$store.dispatch('removeProductFromCustomer', toRemove);
+      this.customersProduct.products = this.customersProduct.products.filter(
+        (prod) => prod.id !== productId,
+      );
     },
   },
 };

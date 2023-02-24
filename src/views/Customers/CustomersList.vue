@@ -35,6 +35,8 @@
                 size="sm"
                 @click="toClientProduct(data.item.id)"
                 variant="dark"
+                :disabled="!data.item.status ? true : false"
+                v-b-tooltip.hover.bottom="'Vincular Produto'"
               >
                 <b-icon icon="plus-circle" />
               </b-button>
@@ -42,6 +44,7 @@
                 size="sm"
                 @click="toEditCustomer(data.item.id)"
                 variant="success"
+                v-b-tooltip.hover.bottom="'Editar Cliente'"
               >
                 <b-icon icon="pencil-square" />
               </b-button>
@@ -49,6 +52,9 @@
                 size="sm"
                 @click="statusChange(data.item.id)"
                 :variant="data.item.status ? 'warning' : 'secondary'"
+                v-b-tooltip.hover.bottom="
+                  !data.item.status ? 'Ativar' : 'Desativar'
+                "
               >
                 <b-icon v-if="!data.item.status" icon="plug" />
 

@@ -5,7 +5,7 @@
         Clientes
       </b-col>
       <b-col cols="6" class="mt-2 d-flex justify-content-end">
-        <b-button to="/products/create" variant="success"
+        <b-button to="/customers/create" variant="success"
           >Novo Cliente</b-button
         >
       </b-col>

@@ -74,7 +74,7 @@ export default new Vuex.Store({
     addNewProduct({ commit }, newProduct) {
       commit('addProduct', newProduct);
     },
-    addNewCostumer({ commit }, newCostumer) {
+    addNewCustomer({ commit }, newCostumer) {
       commit('addCustomer', newCostumer);
     },
     updateExistingProduct({ commit }, productUpdated) {

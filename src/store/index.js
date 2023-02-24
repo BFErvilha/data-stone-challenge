@@ -131,6 +131,7 @@ export default new Vuex.Store({
     },
     addCustomer(state, newCustomer) {
       newCustomer.id = state.customers.length + 1;
+      newCustomer.products = [];
       state.customers.push(newCustomer);
     },
     updateCustomer(state, customerUpdated) {

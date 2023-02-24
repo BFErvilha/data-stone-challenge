@@ -103,6 +103,15 @@ export default {
       );
     },
   },
+  created() {
+    if (
+      this.$store.getters.customerById(
+        parseInt(this.$route.params.customerId),
+      ) === undefined
+    ) {
+      this.$router.push({ name: 'customersList' });
+    }
+  },
 };
 </script>
 

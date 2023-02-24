@@ -22,10 +22,14 @@
             </b-form-checkbox>
           </b-form-group>
 
-          <b-button v-if="!hasRegister" @click="saveProduct()" variant="primary"
+          <b-button
+            size="sm"
+            v-if="!hasRegister"
+            @click="saveProduct()"
+            variant="primary"
             >Registrar</b-button
           >
-          <b-button v-else @click="updateProduct()" variant="primary"
+          <b-button size="sm" v-else @click="updateProduct()" variant="primary"
             >Atualizar</b-button
           >
         </b-card>

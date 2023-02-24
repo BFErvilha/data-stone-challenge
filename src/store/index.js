@@ -17,7 +17,7 @@ export default new Vuex.Store({
         document: 'mg-11.111.111',
         phone: '12 12345-1234',
         email: 'teste@teste.com',
-        products: 0,
+        products: [],
         status: true,
       },
       {
@@ -26,7 +26,7 @@ export default new Vuex.Store({
         document: 'mg-22.222.222',
         phone: '12 12345-1234',
         email: 'teste2@teste2.com',
-        products: 0,
+        products: [],
         status: false,
       },
     ],
@@ -40,11 +40,40 @@ export default new Vuex.Store({
     customerById: (state) => (id) => {
       return state.customers.find((customer) => customer.id === id);
     },
+    productsCustomerById: (state) => (id) => {
+      let productsCustomer = state.customers.find(
+        (customer) => customer.id === id,
+      );
+      return productsCustomer.products;
+    },
   },
   mutations: {
     addProduct(state, newProduct) {
       newProduct.id = state.products.length + 1;
       state.products.push(newProduct);
+    },
+    addProductToCustomer(state, productToCustomer) {
+      state.customers.map((customer) => {
+        if (customer.id === productToCustomer.customerId) {
+          productToCustomer.products.forEach((item) => {
+            if (!customer.products.some((prod) => prod.id === item.id)) {
+              customer.products.push(item);
+            }
+          });
+        }
+      });
+    },
+    removeProductCustomer(state, productToRemove) {
+      state.customers.map((customer) => {
+        if (customer.id === productToRemove.customerId) {
+          const index = customer.products.findIndex(
+            (prod) => prod.id === productToRemove.productId,
+          );
+          if (index !== -1) {
+            customer.products.splice(index, 1);
+          }
+        }
+      });
     },
     updateProduct(state, productUpdated) {
       state.products.map((product) => {
@@ -102,6 +131,12 @@ export default new Vuex.Store({
     },
     customerStatusChange({ commit }, customerStatus) {
       commit('customerEnableDisable', customerStatus);
+    },
+    productTocustomer({ commit }, productTocustomer) {
+      commit('addProductToCustomer', productTocustomer);
+    },
+    removeProductFromCustomer({ commit }, productFromcustomer) {
+      commit('removeProductCustomer', productFromcustomer);
     },
   },
   modules: {},

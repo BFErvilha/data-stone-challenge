@@ -5,7 +5,7 @@
         Produtos
       </b-col>
       <b-col cols="6" class="mt-2 d-flex justify-content-end">
-        <b-button to="/products/create" variant="success"
+        <b-button size="sm" to="/products/create" variant="success"
           >Novo Produto</b-button
         >
       </b-col>
@@ -28,14 +28,22 @@
           </template>
           <template #cell(actions)="data">
             <div class="btn-actions d-flex justify-content-end">
-              <b-button :to="`/products/${data.item.id}`" variant="success"
-                >Editar</b-button
-              >
               <b-button
+                size="sm"
+                @click="toEditProduct(data.item.id)"
+                variant="success"
+              >
+                <b-icon icon="pencil-square" />
+              </b-button>
+              <b-button
+                size="sm"
                 @click="statusChange(data.item.id)"
                 :variant="data.item.status ? 'warning' : 'secondary'"
-                >{{ data.item.status ? 'Desativar' : 'Ativar' }}</b-button
               >
+                <b-icon v-if="!data.item.status" icon="plug" />
+
+                <b-icon v-else icon="plug-fill" />
+              </b-button>
             </div>
           </template>
         </b-table>
@@ -72,6 +80,9 @@ export default {
     },
     statusChange(id) {
       this.$store.dispatch('productStatusChange', id);
+    },
+    toEditProduct(id) {
+      this.$router.push({ path: `/products/${id}` });
     },
   },
   filters: {

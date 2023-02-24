@@ -5,7 +5,7 @@
         Clientes
       </b-col>
       <b-col cols="6" class="mt-2 d-flex justify-content-end">
-        <b-button to="/customers/create" variant="success"
+        <b-button size="sm" to="/customers/create" variant="success"
           >Novo Cliente</b-button
         >
       </b-col>
@@ -21,6 +21,9 @@
           <template #empty>
             <h4>No momento não temos clientes cadastrados ainda</h4>
           </template>
+          <template #cell(products)="data">
+            {{ data.item.products.length }}
+          </template>
           <template #cell(status)="data">
             <div class="badge" :class="statusToClass(data.item.status)">
               {{ data.item.status | statusName }}
@@ -28,14 +31,29 @@
           </template>
           <template #cell(actions)="data">
             <div class="btn-actions d-flex justify-content-end">
-              <b-button :to="`/customers/${data.item.id}`" variant="success"
-                >Editar</b-button
-              >
               <b-button
+                size="sm"
+                @click="toClientProduct(data.item.id)"
+                variant="dark"
+              >
+                <b-icon icon="plus-circle" />
+              </b-button>
+              <b-button
+                size="sm"
+                @click="toEditCustomer(data.item.id)"
+                variant="success"
+              >
+                <b-icon icon="pencil-square" />
+              </b-button>
+              <b-button
+                size="sm"
                 @click="statusChange(data.item.id)"
                 :variant="data.item.status ? 'warning' : 'secondary'"
-                >{{ data.item.status ? 'Desativar' : 'Ativar' }}</b-button
               >
+                <b-icon v-if="!data.item.status" icon="plug" />
+
+                <b-icon v-else icon="plug-fill" />
+              </b-button>
             </div>
           </template>
         </b-table>
@@ -77,6 +95,12 @@ export default {
     },
     statusChange(id) {
       this.$store.dispatch('customerStatusChange', id);
+    },
+    toClientProduct(id) {
+      this.$router.push({ path: `/customers/${id}/linkProduct` });
+    },
+    toEditCustomer(id) {
+      this.$router.push({ path: `/customers/${id}` });
     },
   },
   filters: {

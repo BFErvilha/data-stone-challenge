@@ -39,6 +39,11 @@ const routes = [
     name: 'customersEdit',
     component: () => import('@/views/Customers/Customer.vue'),
   },
+  {
+    path: '/customers/:customerId/linkProduct',
+    name: 'productToCustomer',
+    component: () => import('@/views/Customers/ProductToCustomer.vue'),
+  },
 ];
 
 const router = new VueRouter({

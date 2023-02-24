@@ -71,9 +71,10 @@
             v-if="!hasRegister"
             @click="saveCustomer()"
             variant="primary"
+            size="sm"
             >Registrar</b-button
           >
-          <b-button v-else @click="updateCustomer()" variant="primary"
+          <b-button size="sm" v-else @click="updateCustomer()" variant="primary"
             >Atualizar</b-button
           >
         </b-card>

@@ -28,10 +28,14 @@
           </template>
           <template #cell(actions)="data">
             <div class="btn-actions d-flex justify-content-end">
-              <b-button :to="`/products/${data.item.id}`" variant="success"
+              <b-button :to="`/customers/${data.item.id}`" variant="success"
                 >Editar</b-button
               >
-              <b-button variant="secondary">Desativar</b-button>
+              <b-button
+                @click="statusChange(data.item.id)"
+                :variant="data.item.status ? 'warning' : 'secondary'"
+                >{{ data.item.status ? 'Desativar' : 'Ativar' }}</b-button
+              >
             </div>
           </template>
         </b-table>
@@ -70,6 +74,9 @@ export default {
     statusToClass(status) {
       if (status) return 'badgeActive';
       return 'badgeInactive';
+    },
+    statusChange(id) {
+      this.$store.dispatch('customerStatusChange', id);
     },
   },
   filters: {

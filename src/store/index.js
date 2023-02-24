@@ -54,6 +54,20 @@ export default new Vuex.Store({
         }
       });
     },
+    productEnableDisable(state, productStateChanged) {
+      state.products.map((product) => {
+        if (product.id === productStateChanged) {
+          product.status = !product.status;
+        }
+      });
+    },
+    customerEnableDisable(state, customerStateChanged) {
+      state.customers.map((customer) => {
+        if (customer.id === customerStateChanged) {
+          customer.status = !customer.status;
+        }
+      });
+    },
     addCustomer(state, newCustomer) {
       newCustomer.id = state.customers.length + 1;
       state.customers.push(newCustomer);
@@ -82,6 +96,12 @@ export default new Vuex.Store({
     },
     updateExistingCustomer({ commit }, customerUpdated) {
       commit('updateCustomer', customerUpdated);
+    },
+    productStatusChange({ commit }, productStatus) {
+      commit('productEnableDisable', productStatus);
+    },
+    customerStatusChange({ commit }, customerStatus) {
+      commit('customerEnableDisable', customerStatus);
     },
   },
   modules: {},

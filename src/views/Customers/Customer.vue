@@ -67,8 +67,14 @@
             </b-form-checkbox>
           </b-form-group>
 
-          <b-button @click="saveCustomer()" variant="primary"
+          <b-button
+            v-if="!hasRegister"
+            @click="saveCustomer()"
+            variant="primary"
             >Registrar</b-button
+          >
+          <b-button v-else @click="updateCustomer()" variant="primary"
+            >Atualizar</b-button
           >
         </b-card>
       </b-col>
@@ -97,6 +103,19 @@ export default {
       this.$store.dispatch('addNewCustomer', this.customer);
       this.$router.push({ name: 'customersList' });
     },
+    updateCustomer() {
+      this.$store.dispatch('updateExistingCustomer', this.customer);
+      this.$router.push({ name: 'customersList' });
+    },
+    getStoreCustomer(customerId) {
+      this.hasRegister = true;
+      this.customer = this.$store.getters.customerById(customerId);
+    },
+  },
+  created() {
+    if (this.$route.params.customerId) {
+      this.getStoreCustomer(parseInt(this.$route.params.customerId));
+    }
   },
 };
 </script>
